@@ -4,14 +4,13 @@ import jupiterpi.tools.files.Path;
 import jupiterpi.tools.files.csv.CSVCastable;
 import jupiterpi.tools.files.csv.CSVObjectsFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Connection implements CSVCastable {
+public class CheckableService implements CSVCastable {
     private String name;
     private String pingUrl;
 
-    private Connection(String name, String pingUrl) {
+    private CheckableService(String name, String pingUrl) {
         this.name = name;
         this.pingUrl = pingUrl;
     }
@@ -26,7 +25,7 @@ public class Connection implements CSVCastable {
 
     /* csv */
 
-    public Connection(String[] f) {
+    public CheckableService(String[] f) {
         name = f[0];
         pingUrl = f[1];
     }
@@ -38,15 +37,15 @@ public class Connection implements CSVCastable {
 
     /* disc access */
 
-    private static final Path registryFile = Path.getRunningDirectory().file("connections");
+    private static final Path registryFile = Path.getRunningDirectory().file("services.csv");
 
-    private static List<Connection> connections = null;
+    private static List<CheckableService> services = null;
 
-    public static List<Connection> getConnections() {
-        if (connections == null) {
-            CSVObjectsFile<Connection> file = new CSVObjectsFile<Connection>(registryFile, Connection.class);
-            connections = file.getObjects();
+    public static List<CheckableService> getServices() {
+        if (services == null) {
+            CSVObjectsFile<CheckableService> file = new CSVObjectsFile<CheckableService>(registryFile, CheckableService.class);
+            services = file.getObjects();
         }
-        return connections;
+        return services;
     }
 }
