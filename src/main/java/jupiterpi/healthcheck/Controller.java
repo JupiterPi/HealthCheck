@@ -25,6 +25,24 @@ public class Controller {
         System.out.println(response.responseCode);
         System.out.println(response.responseText);
 
+        if (checkServices()) return "ok";
+        else return "failed";
+    }
+
+    private boolean checkServices() {
+        for (CheckableService service : CheckableService.getServices()) {
+            String url = service.getPingUrl();
+            HttpRequest.Response response = new HttpRequest(url).send();
+            if (response.responseCode != 200) {
+                bot.sendServiceDown(service.getName());
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @GetMapping(value = {"/service1", "/service2", "/service3"})
+    public String service() {
         return "ok";
     }
 }
