@@ -1,5 +1,6 @@
 package jupiterpi.healthcheck;
 
+import jupiterpi.healthcheck.discord.DiscordBot;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,14 +9,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("")
 public class Controller {
+    DiscordBot bot = new DiscordBot(ResourcesFile.get("local-name"));
+
     @GetMapping("/ping")
     public String ping() throws IOException {
         //for (CheckableService service : CheckableService.getServices()) {
